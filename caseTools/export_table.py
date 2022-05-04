@@ -85,13 +85,12 @@ def TestCase_steps(TestCase_path):    #讀取Test case步驟
     workbook = openpyxl.load_workbook(TestCase_path+'.xlsx')
     sheet = workbook.active
     step_list = []
-    print(sheet.max_row)
+    # print(sheet.max_row)
     for i in range(1, sheet.max_row):
         step = sheet['B'+str(i + 3)].value  #我從第四格B開始
         if step != None:
             step_list.append(step)
-            print(step_list)
-    
+            # print(step_list)
     # if stepNum == len(step_list):        
     #     stepNum =1          #Step 1 (登入) 只會執行一次
     # stepNum +=1

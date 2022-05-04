@@ -30,17 +30,17 @@ def enter_testcase(driver):   #testcase編號...
 def click_attachments(driver):                                                                 
     ul=wait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[12]/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/div/div/ul'))) #先定位role="tablist"的ul
     li = ul.find_elements_by_xpath('li') #往下找li
-    li[-2].click() #點擊Attachments (固定會在倒數第二li)
+    li[-2].click() #點擊Attachments (固定是在倒數第二li)
     wait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "add-new-item-container"))).click() #點擊Attachments +
 
-def click_upload_file(X1,Y1,X2,y2):    
+def click_upload_file(X1,Y1,X2,y2,excelUploadPath):    
     pyautogui.moveTo(X1,Y1, duration= 0.5) #檔案路徑座標
     time.sleep(1)
     pyautogui.click(clicks=2)
     time.sleep(1)
     pyautogui.hotkey('ctrl', 'a') 
     time.sleep(3)
-    pyautogui.write('C:/Users/Liouki/sample_uploadAzure/excelUpload')  #excelUpload檔案路徑
+    pyautogui.write(excelUploadPath)  #你的excelUpload檔案路徑
     time.sleep(3)
     pyautogui.press('enter')
     time.sleep(3)
