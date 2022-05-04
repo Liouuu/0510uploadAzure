@@ -24,8 +24,8 @@ from selenium import webdriver
 driver_Classroom=webdriver.Chrome(executable_path="chromedriver") #瀏覽器1
 driver_Classroom.get("https://stage.myviewboard.com/signin")
 driver_Classroom.maximize_window()
-MVBcom_account = "kim.yj.liou@viewsonic.com" 
-MVBcom_password = "Mandy877!" 
+MVBcom_account = "" 
+MVBcom_password = "" 
 
 #開始創造caseID腳本
 caseID='33689'
