@@ -21,14 +21,14 @@ from selenium import webdriver
 # driver.get("https://stage.myviewboard.com/signin")
 # driver.maximize_window()
 
-# driver_Classroom=webdriver.Chrome(executable_path="chromedriver") #瀏覽器1
-# driver_Classroom.get("https://stage.myviewboard.com/signin")
-# driver_Classroom.maximize_window()
-# MVBcom_account = "" 
-# MVBcom_password = "" 
+driver_Classroom=webdriver.Chrome(executable_path="chromedriver") #瀏覽器1
+driver_Classroom.get("https://stage.myviewboard.com/signin")
+driver_Classroom.maximize_window()
+MVBcom_account = "kim.yj.liou@viewsonic.com" 
+MVBcom_password = "" 
 
 #開始創造caseID腳本
-caseID='33689'
+caseID='4082'
 def case_33689 (driver_Classroom):  
 #step2
     a=0
@@ -98,26 +98,27 @@ def case_33689 (driver_Classroom):
     time.sleep(3)
 #caseID腳本結束
 
-# case_33689(driver_Classroom)
-# caseTools.chrome_quitting.chrome_quitting(driver_Classroom) 
+case_33689(driver_Classroom)
+caseTools.chrome_quitting.chrome_quitting(driver_Classroom) 
 caseTools.check_excel_amount.maintain_20("./excelOutput/") #只留20份
-# caseTools.copy_to_new_folder.copy_to_new_folder(caseID) #最新的excel 檔名+上日期 複製到excelUpload資料夾
-# time.sleep(2)
+caseTools.copy_to_new_folder.copy_to_new_folder(caseID) #最新的excel 檔名+上日期 複製到excelUpload資料夾
+time.sleep(2)
 caseTools.check_excel_amount.maintain_1("./excelUpload/") #只留1份
 
 #開始進入Azure並上傳最新檔案
-# driver_Azure=webdriver.Chrome(executable_path="chromedriver") 
-# driver_Azure.get("https://viewsonic-ssi.visualstudio.com/")
-# driver_Azure.maximize_window()
-# Azure_account = "kim.liou@myviewboard.com" #固定用此帳戶
-# Azure_password = "Azure1111" 
+driver_Azure=webdriver.Chrome(executable_path="chromedriver") 
+driver_Azure.get("https://viewsonic-ssi.visualstudio.com/")
+driver_Azure.maximize_window()
+Azure_account = "kim.liou@myviewboard.com" #固定用此帳戶
+Azure_password = "Azure1111" 
 
-# caseTools.azure.login_azure(driver_Azure,Azure_account,Azure_password)
-# caseTools.azure.enter_projects(driver_Azure)
-# caseTools.azure.enter_testcase(driver_Azure)
-# caseTools.azure.click_attachments(driver_Azure)
-# caseTools.azure.click_upload_file(830,60,414,180,'C:/Users/Liouki/sample_uploadAzure/excelUpload') #座標是固定的 830,60(檔案x1,y1) 414,180(第一個檔案清單x2,y2) ; #你的excelUpload檔案路徑
-# caseTools.chrome_quitting.chrome_quitting(driver_Azure) 
+
+caseTools.azure.login_azure(driver_Azure,Azure_account,Azure_password)
+caseTools.azure.enter_projects(driver_Azure,'Droid')
+caseTools.azure.enter_testcase(driver_Azure,caseID)
+caseTools.azure.click_attachments(driver_Azure)
+caseTools.azure.click_upload_file(473,950,'C:/Users/Liouki/sample_uploadAzure/excelUpload') #座標是固定的 830,60(檔案x1,y1) 414,180(第一個檔案清單x2,y2) ; #你的excelUpload檔案路徑
+caseTools.chrome_quitting.chrome_quitting(driver_Azure) 
 #Azure上傳動作全部結束
 
 

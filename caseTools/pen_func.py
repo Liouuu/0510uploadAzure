@@ -12,7 +12,7 @@ def open_menu(driver):
     pen_butuon = driver.find_element_by_xpath('//div[@aria-label="t2b"]')
     pen_butuon.click()                 
     try: #如果menu沒有顯示，再按一次                                    
-        WebDriverWait(driver, 3).until(                   #'//*[@id="toolbar-menu-layer"]/div[2]'          
+        WebDriverWait(driver, 3).until(                   
                 EC.presence_of_element_located((By.XPATH, '//*[@id=\"toolbar-menu-layer\"]/div'))
             )
     except:
@@ -24,6 +24,7 @@ def select_pen_type (driver, pen_type): #1 for marker, 2 for highlighter...
         )                                           
     pen = driver.find_element_by_xpath('//*[@id="toolbar-menu-layer"]/div/div[2]/div['+str(pen_type)+']/div/div/div')
     pen.click()
+
 
 # def select_marker (driver):
 #     WebDriverWait(driver, 10).until(                 

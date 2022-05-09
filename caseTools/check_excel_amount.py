@@ -1,4 +1,6 @@
+
 import os
+from pathlib import Path
 def maintain_20(excelPath): 
     allFilesList=os.listdir(excelPath)
     #依照文件最後創建時間重新排進list
@@ -29,7 +31,7 @@ def maintain_1(excelPath):
             pass
             # print("未經刪除")
 
-
+#     allFilesList.sort(key=os.path.getctime)  
 
 
         
