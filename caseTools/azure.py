@@ -2,12 +2,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.support.ui import WebDriverWait as wait
-from soupsieve import select
 from selenium.webdriver.common.by import By
 import pyautogui
 import caseTools.chrome_quitting
 from selenium import webdriver
-
 width, height = pyautogui.size()
 (1920, 1080)
 driver_Azure=webdriver.Chrome(executable_path="chromedriver") 
@@ -44,14 +42,19 @@ def enter_testcase(driver,caseID):   #testcase編號...
     time.sleep(3)
 
 def click_attachments(driver): 
+    # try:
+    #     ul=wait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[12]/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/div/div/ul'))) #先定位role="tablist"的ul
+    # except:                                                                
+    #     ul=wait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[12]/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/div/div/ul'))) #先定位role="tablist"的ul
+    # li = ul.find_elements_by_xpath('li') #往下找li
+    # li[-2].click() #點擊Attachments (固定是在倒數第二li)
+    # wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'ul. div:nth-child(6)'))).click() 
+    # wait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, 'work-item-form-tabs'))).find_element_by_xpath("//div[contains(@aria-label, 'Attachments')]").click()                               
+    # li = driver.find_element_by_class_name('work-item-form-tabs').find_element_by_xpath("//div[contains(@aria-label, 'Attachments')]")
+    # li.click()
+    # Attachments
     try:
-        ul=wait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[12]/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/div/div/ul'))) #先定位role="tablist"的ul
-    except:                                                                
-        ul=wait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[12]/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/div/div/ul'))) #先定位role="tablist"的ul
-    li = ul.find_elements_by_xpath('li') #往下找li
-    li[-2].click() #點擊Attachments (固定是在倒數第二li)
-    try:
-        wait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "add-new-item-container"))).click() #點擊Attachments +
+        wait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "add-new-item-container"))).click() #點擊Attachments + 
     except:
         wait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//i[contains(string(),"Add attachment")]'))).click() #點擊Attachments +
 
