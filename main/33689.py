@@ -13,6 +13,7 @@ import caseTools.check_excel_amount
 import caseTools.canvas_compare
 import caseTools.copy_to_new_folder
 import caseTools.chrome_quitting
+import caseTools.thePreviousUploadFile
 from selenium import webdriver
 
 # options = webdriver.ChromeOptions() 
@@ -28,11 +29,12 @@ MVBcom_account = "kim.yj.liou@viewsonic.com"
 MVBcom_password = "Mandy877!" 
 
 #開始創造caseID腳本
-caseID='4082'
+caseID='33689'
 def case_33689 (driver_Classroom):  
-#step2
+    #step2
+    excelTestcasePath="./excelTestcase/"
     a=0
-    return_list=caseTools.export_table.TestCase_steps('./excelTestcase/'+caseID)   #讀testcase檔案得到list #我從第四格B開始              
+    return_list=caseTools.export_table.TestCase_steps(excelTestcasePath+caseID)   #讀testcase檔案得到list #我從第四格B開始              
     outputWorkbookFilename= caseID+'_output'
     caseTools.export_table.new_sheet(outputWorkbookFilename)      #建立caseID_output.excel
     caseTools.MVBcom.loginMVBcom(driver_Classroom,MVBcom_account,MVBcom_password)   #使用enetity account在MVB.com點擊開啟classroom
@@ -96,35 +98,37 @@ def case_33689 (driver_Classroom):
     else:
         caseTools.export_table.export_table(outputWorkbookFilename,step=return_list[a],result='Failed',img_path=case_AIpen_to_canvas)
     time.sleep(3)
+case_33689(driver_Classroom)
+caseTools.chrome_quitting.chrome_quitting(driver_Classroom) 
 #caseID腳本結束
 
-# case_33689(driver_Classroom)
-caseTools.chrome_quitting.chrome_quitting(driver_Classroom) 
-caseTools.check_excel_amount.maintain_20("./excelOutput/") #只留20份
-caseTools.copy_to_new_folder.copy_to_new_folder(caseID) #最新的excel 檔名+上日期 複製到excelUpload資料夾
-time.sleep(2)
-caseTools.check_excel_amount.maintain_1("./excelUpload/") #只留1份
 
-#開始進入Azure並上傳最新檔案
+#處理目前本地資料數目
+excelUploadPath="./excelUpload/"
+excelOutputPath="./excelOutput/"
+caseTools.check_excel_amount.maintain_20(excelOutputPath) #只留20份
+caseTools.copy_to_new_folder.copy_to_new_folder(caseID) #最新的excel 檔名+上日期 複製到excelUpload
+time.sleep(2)
+caseTools.check_excel_amount.maintain_1(excelUploadPath) #只留1份
+previousOneFile=caseTools.azure.getPreviousUploadFile(excelUploadPath)  #取檔名
+
+
+
+Azure_account = "kim.liou@myviewboard.com" 
+Azure_password = "Azure1111" 
 project_name='Droid'
 driver_Azure=webdriver.Chrome(executable_path="chromedriver") 
-# driver_Azure.get("https://dev.azure.com/viewsonic.ssi/"+project_name+"/_workitems/edit/"+caseID)  #jason滴
-driver_Azure.get("https://viewsonic-ssi.visualstudio.com/")
+driver_Azure.get("https://dev.azure.com/viewsonic-ssi/"+project_name+"/_workitems/edit/"+caseID)  
 driver_Azure.maximize_window()
-Azure_account = "kim.liou@myviewboard.com" #固定用此帳戶
-Azure_password = "Azure1111" 
-
+#開始進入Azure
 caseTools.azure.login_azure(driver_Azure,Azure_account,Azure_password)
-caseTools.azure.enter_projects(driver_Azure,project_name)
-caseTools.azure.enter_testcase(driver_Azure,caseID)
-caseTools.azure.click_attachments(driver_Azure)
-caseTools.azure.click_upload_file(473,950,'C:/Users/user/Desktop/upload/WebRegressionTesting-classroom/excelUpload') #座標是固定的 830,60(檔案x1,y1) 414,180(第一個檔案清單x2,y2) ; #你的excelUpload檔案路徑
+caseTools.azure.click_attachments(driver_Azure) #進入attachments頁面
+#caseTools.azure.upload_file(driver_Azure,previousOneFile,excelUploadPath) 
+time.sleep(2)
+caseTools.azure.delete_thePreviousOnefile(driver_Azure,previousOneFile)
+caseTools.azure.upload_file(driver_Azure,previousOneFile,excelUploadPath) 
 caseTools.chrome_quitting.chrome_quitting(driver_Azure) 
-#Azure上傳動作全部結束
-
-
-
-
+#Azure結束
 
 
 
